@@ -1,5 +1,9 @@
 document.getElementById('generate-btn').addEventListener('click', function() {
     var qrText = document.getElementById('text-input').value;
+    var colorDark = document.getElementById('color-dark').value;
+    var colorLight = document.getElementById('color-light').value;
+    var transparentBg = document.getElementById('transparent-bg').checked;
+
     if (qrText) {
         var qrCodeElement = document.getElementById('qr-code');
         qrCodeElement.innerHTML = ''; // Clear previous QR code
@@ -8,7 +12,10 @@ document.getElementById('generate-btn').addEventListener('click', function() {
         var qr = new QRCode(qrCodeElement, {
             text: qrText,
             width: 256,
-            height: 256
+            height: 256,
+            colorDark: colorDark,
+            colorLight: colorLight,
+            correctLevel: QRCode.CorrectLevel.H
         });
 
         // Wait for QR code to be generated and available in the DOM
@@ -24,9 +31,13 @@ document.getElementById('generate-btn').addEventListener('click', function() {
                 paddedCanvas.width = qrCanvas.width + 2 * padding;
                 paddedCanvas.height = qrCanvas.height + 2 * padding;
 
-                // Draw white background
-                context.fillStyle = '#fff';
-                context.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+                // Draw transparent background if selected, otherwise draw white
+                if (transparentBg) {
+                    context.clearRect(0, 0, paddedCanvas.width, paddedCanvas.height); // Transparent background
+                } else {
+                    context.fillStyle = '#fff';
+                    context.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+                }
 
                 // Draw QR code onto new canvas with padding
                 context.drawImage(qrCanvas, padding, padding);
