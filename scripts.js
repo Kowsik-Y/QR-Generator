@@ -35,7 +35,7 @@ document.getElementById('generate-btn').addEventListener('click', function() {
                 if (transparentBg) {
                     context.clearRect(0, 0, paddedCanvas.width, paddedCanvas.height); // Transparent background
                 } else {
-                    context.fillStyle = '#fff';
+                    context.fillStyle = '#ffffff'; // White background
                     context.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
                 }
 
