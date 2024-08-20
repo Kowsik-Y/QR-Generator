@@ -10,6 +10,11 @@
     <div class="container">
         <h1>QR Code Generator</h1>
         <input type="text" id="text-input" placeholder="Enter text or URL">
+        <input type="color" id="color-dark" value="#000000" title="Dark Color">
+        <input type="color" id="color-light" value="#ffffff" title="Light Color">
+        <label>
+            <input type="checkbox" id="transparent-bg"> Transparent Background
+        </label>
         <button id="generate-btn">Generate QR Code</button>
         <div id="qr-code"></div>
         <a id="download-link" style="display:none;">Download QR Code</a>
