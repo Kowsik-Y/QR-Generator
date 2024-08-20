@@ -42,23 +42,6 @@ document.getElementById('generate-btn').addEventListener('click', function() {
                 // Draw QR code onto new canvas with padding
                 context.drawImage(qrCanvas, padding, padding);
 
-                // Handle light color transparency
-                if (transparentBg) {
-                    var imgData = context.getImageData(0, 0, paddedCanvas.width, paddedCanvas.height);
-                    var data = imgData.data;
-
-                    // Set light color to transparent
-                    for (var i = 0; i < data.length; i += 4) {
-                        if (data[i] === parseInt(colorLight.substr(1, 2), 16) &&
-                            data[i + 1] === parseInt(colorLight.substr(3, 2), 16) &&
-                            data[i + 2] === parseInt(colorLight.substr(5, 2), 16)) {
-                            data[i + 3] = 0; // Set alpha to 0 for light color
-                        }
-                    }
-
-                    context.putImageData(imgData, 0, 0);
-                }
-
                 // Convert padded canvas to image data
                 var qrImage = paddedCanvas.toDataURL("image/png");
 
