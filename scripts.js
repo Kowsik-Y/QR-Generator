@@ -31,7 +31,7 @@ document.getElementById('generate-btn').addEventListener('click', function() {
                 paddedCanvas.width = qrCanvas.width + 2 * padding;
                 paddedCanvas.height = qrCanvas.height + 2 * padding;
 
-                // Draw transparent background if selected, otherwise draw white
+                // Draw transparent background if selected
                 if (transparentBg) {
                     context.clearRect(0, 0, paddedCanvas.width, paddedCanvas.height); // Transparent background
                 } else {
