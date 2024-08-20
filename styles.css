@@ -44,3 +44,18 @@ h1 {
 #qr-code {
     margin-top: 20px;
 }
+
+#download-link {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#download-link:hover {
+    background-color: #218838;
+}
