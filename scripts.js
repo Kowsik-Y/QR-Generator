@@ -4,22 +4,24 @@ document.getElementById('generate-btn').addEventListener('click', function() {
         var qrCodeElement = document.getElementById('qr-code');
         qrCodeElement.innerHTML = ''; // Clear previous QR code
 
+        // Generate QR code
         var qr = new QRCode(qrCodeElement, {
             text: qrText,
             width: 256,
             height: 256
         });
 
-        // Timeout to ensure the QR code is generated before creating the download link
+        // Wait for QR code to be generated and available in the DOM
         setTimeout(() => {
             var qrCanvas = qrCodeElement.querySelector('canvas');
             if (qrCanvas) {
-                var downloadLink = document.getElementById('download-link');
                 var qrImage = qrCanvas.toDataURL("image/png");
+                var downloadLink = document.getElementById('download-link');
                 downloadLink.href = qrImage;
-                downloadLink.style.display = 'inline-block'; // Show the download link
+                downloadLink.download = "qrcode.png"; // Ensure correct filename
+                downloadLink.style.display = 'block'; // Show the download link
             }
-        }, 500); // Adjust timeout as necessary for your use case
+        }, 100); // Small delay to ensure QR code is generated
     } else {
         alert("Please enter some text or a URL!");
     }
