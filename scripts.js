@@ -31,30 +31,31 @@ document.getElementById('generate-btn').addEventListener('click', function() {
                 paddedCanvas.width = qrCanvas.width + 2 * padding;
                 paddedCanvas.height = qrCanvas.height + 2 * padding;
 
-                // Draw transparent background if selected
-                context.clearRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+                // Handle transparent background
+                if (transparentBg) {
+                    context.clearRect(0, 0, paddedCanvas.width, paddedCanvas.height); // Transparent background
+                } else {
+                    context.fillStyle = '#ffffff'; // White background
+                    context.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+                }
 
                 // Draw QR code onto new canvas with padding
                 context.drawImage(qrCanvas, padding, padding);
 
-                // If transparent background is selected, make light color transparent
+                // Handle light color transparency
                 if (transparentBg) {
                     var imgData = context.getImageData(0, 0, paddedCanvas.width, paddedCanvas.height);
                     var data = imgData.data;
 
-                    // Extract RGB values from colorLight (assuming it's in #RRGGBB format)
-                    var lightR = parseInt(colorLight.substring(1, 3), 16);
-                    var lightG = parseInt(colorLight.substring(3, 5), 16);
-                    var lightB = parseInt(colorLight.substring(5, 7), 16);
-
-                    // Loop through each pixel and set light color pixels to transparent
+                    // Set light color to transparent
                     for (var i = 0; i < data.length; i += 4) {
-                        if (data[i] === lightR && data[i + 1] === lightG && data[i + 2] === lightB) {
-                            data[i + 3] = 0; // Set alpha to 0 (fully transparent)
+                        if (data[i] === parseInt(colorLight.substr(1, 2), 16) &&
+                            data[i + 1] === parseInt(colorLight.substr(3, 2), 16) &&
+                            data[i + 2] === parseInt(colorLight.substr(5, 2), 16)) {
+                            data[i + 3] = 0; // Set alpha to 0 for light color
                         }
                     }
 
-                    // Apply modified image data back to the canvas
                     context.putImageData(imgData, 0, 0);
                 }
 
