@@ -10,12 +10,17 @@ body {
 
 .container {
     text-align: center;
+    height:70%;
+    width:70%;
     background: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: grid;
 }
-
+.sep{
+    display:inline-flex;
+}
 input[type="color"] {
     margin: 10px;
 }
@@ -51,4 +56,23 @@ button:hover {
 
 #download-link:hover {
     background-color: #218838;
+}
+#text-input{
+    width:90%;
+    padding: 10px 20px;
+    border-radius:5px;
+    padding-left:20px;
+    outline:none;
+    font-size: 14px;
+   font-weight: normal;
+  border: 0.5px solid rgb(137, 151, 155);
+  transition: border-color 150ms ease-in-out 0s;
+  outline: none;
+  color: rgb(33, 49, 60);
+  background-color: rgb(255, 255, 255);
+    
+}
+#text-input:hover{
+  box-shadow: rgb(231 238 236) 0px 0px 0px 2px;
+  border-radius: 7px;
 }
