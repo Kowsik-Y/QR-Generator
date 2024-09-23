@@ -5,23 +5,21 @@ document.getElementById('generate-btn').addEventListener('click', function () {
     var transparentBg = document.getElementById('transparent-bg').checked;
 
     if (qrText) {
-        // URL-encode the UPI ID if it follows the UPI format
-        if (qrText.startsWith("upi://")) {
-            qrText = encodeURIComponent(qrText);
-        }
-
         var qrCodeElement = document.getElementById('qr-code');
         qrCodeElement.innerHTML = ''; 
 
-        // If transparent background is checked, set colorLight to transparent
+        // Handle transparent background option
         var lightColor = transparentBg ? "rgba(0, 0, 0, 0)" : colorLight;
 
+        // Check if it's a UPI ID and handle accordingly (no URL encoding here)
+        var qrTextToUse = qrText;  // Use the text directly for UPI or any other input
+
         var qr = new QRCode(qrCodeElement, {
-            text: decodeURIComponent(qrText), // Decoding to make the QR code readable after URL encoding
+            text: qrTextToUse, // Pass the text as-is for UPI and other inputs
             width: 256,
             height: 256,
             colorDark: colorDark,
-            colorLight: lightColor, // This is now transparent if needed
+            colorLight: lightColor,  // Set transparent or light color
             correctLevel: QRCode.CorrectLevel.H
         });
 
@@ -34,7 +32,7 @@ document.getElementById('generate-btn').addEventListener('click', function () {
                 paddedCanvas.width = qrCanvas.width + 2 * padding;
                 paddedCanvas.height = qrCanvas.height + 2 * padding;
 
-                // Handle transparent background or white background
+                // Handle background depending on transparency checkbox
                 if (!transparentBg) {
                     context.fillStyle = '#ffffff'; 
                     context.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
@@ -51,7 +49,7 @@ document.getElementById('generate-btn').addEventListener('click', function () {
                 qrCodeElement.innerHTML = '';
                 qrCodeElement.appendChild(imgElement);
                 qrCodeElement.classList.add('show');
-                
+
                 var timestamp = new Date().toISOString().replace(/[-:.]/g, "");
                 var filename = "qrcode_" + timestamp + ".png";
                 var downloadLink = document.getElementById('download-link');
