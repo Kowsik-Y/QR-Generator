@@ -4,6 +4,15 @@ document.getElementById('generate-btn').addEventListener('click', function () {
     var colorLight = document.getElementById('color-light').value;
     var transparentBg = document.getElementById('transparent-bg').checked;
 
+    // Ensure valid UPI ID format (only UPI ID is required, no name or amount)
+    if (qrText.startsWith('upi://')) {
+        // Check if the UPI string has at least the UPI ID (pa=)
+        if (!qrText.includes('pa=')) {
+            alert("Invalid UPI format. Ensure it's in the correct format like upi://pay?pa=someone@upi");
+            return;
+        }
+    }
+
     if (qrText) {
         var qrCodeElement = document.getElementById('qr-code');
         qrCodeElement.innerHTML = ''; 
@@ -11,11 +20,8 @@ document.getElementById('generate-btn').addEventListener('click', function () {
         // Handle transparent background option
         var lightColor = transparentBg ? "rgba(0, 0, 0, 0)" : colorLight;
 
-        // Check if it's a UPI ID and handle accordingly (no URL encoding here)
-        var qrTextToUse = qrText;  // Use the text directly for UPI or any other input
-
         var qr = new QRCode(qrCodeElement, {
-            text: qrTextToUse, // Pass the text as-is for UPI and other inputs
+            text: qrText, // Pass the UPI ID or text directly
             width: 256,
             height: 256,
             colorDark: colorDark,
