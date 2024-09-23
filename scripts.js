@@ -31,15 +31,21 @@ document.getElementById('generate-btn').addEventListener('click', function() {
                 }
                 context.drawImage(qrCanvas, padding, padding);
                 if (transparentBg) {
-                    var imgData = context.getImageData(0, 0, paddedCanvas.width, paddedCanvas.height);
-                    var data = imgData.data;
-                    for (var i = 0; i < data.length; i += 4) {
-                        if (data[i] === parseInt(colorLight.substr(1, 2), 16) &&
-                            data[i + 1] === parseInt(colorLight.substr(3, 2), 16) &&
-                            data[i + 2] === parseInt(colorLight.substr(5, 2), 16)) {
-                            data[i + 3] = 0;
-                        }
-                    }
+    var imgData = context.getImageData(0, 0, paddedCanvas.width, paddedCanvas.height);
+    var data = imgData.data;
+    var lightColorR = parseInt(colorLight.substr(1, 2), 16);
+    var lightColorG = parseInt(colorLight.substr(3, 2), 16);
+    var lightColorB = parseInt(colorLight.substr(5, 2), 16);
+
+    for (var i = 0; i < data.length; i += 4) {
+        
+        if (data[i] === lightColorR && data[i + 1] === lightColorG && data[i + 2] === lightColorB) {
+            data[i + 3] = 0; // Set alpha to 0 for transparency
+        }
+    }
+
+    context.putImageData(imgData, 0, 0);
+}
 
                     context.putImageData(imgData, 0, 0);
                 }
