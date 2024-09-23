@@ -5,17 +5,23 @@ document.getElementById('generate-btn').addEventListener('click', function () {
     var transparentBg = document.getElementById('transparent-bg').checked;
 
     if (qrText) {
+        // URL-encode the UPI ID if it follows the UPI format
+        if (qrText.startsWith("upi://")) {
+            qrText = encodeURIComponent(qrText);
+        }
+
         var qrCodeElement = document.getElementById('qr-code');
         qrCodeElement.innerHTML = ''; 
 
+        // If transparent background is checked, set colorLight to transparent
         var lightColor = transparentBg ? "rgba(0, 0, 0, 0)" : colorLight;
 
         var qr = new QRCode(qrCodeElement, {
-            text: qrText,
+            text: decodeURIComponent(qrText), // Decoding to make the QR code readable after URL encoding
             width: 256,
             height: 256,
             colorDark: colorDark,
-            colorLight: lightColor, 
+            colorLight: lightColor, // This is now transparent if needed
             correctLevel: QRCode.CorrectLevel.H
         });
 
@@ -28,7 +34,7 @@ document.getElementById('generate-btn').addEventListener('click', function () {
                 paddedCanvas.width = qrCanvas.width + 2 * padding;
                 paddedCanvas.height = qrCanvas.height + 2 * padding;
 
-                
+                // Handle transparent background or white background
                 if (!transparentBg) {
                     context.fillStyle = '#ffffff'; 
                     context.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
