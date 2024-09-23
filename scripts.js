@@ -8,7 +8,6 @@ document.getElementById('generate-btn').addEventListener('click', function () {
         var qrCodeElement = document.getElementById('qr-code');
         qrCodeElement.innerHTML = ''; 
 
-        // If transparent background is checked, set colorLight to transparent
         var lightColor = transparentBg ? "rgba(0, 0, 0, 0)" : colorLight;
 
         var qr = new QRCode(qrCodeElement, {
@@ -16,7 +15,7 @@ document.getElementById('generate-btn').addEventListener('click', function () {
             width: 256,
             height: 256,
             colorDark: colorDark,
-            colorLight: lightColor, // This is now transparent if needed
+            colorLight: lightColor, 
             correctLevel: QRCode.CorrectLevel.H
         });
 
@@ -29,7 +28,7 @@ document.getElementById('generate-btn').addEventListener('click', function () {
                 paddedCanvas.width = qrCanvas.width + 2 * padding;
                 paddedCanvas.height = qrCanvas.height + 2 * padding;
 
-                // Handle transparent background or white background
+                
                 if (!transparentBg) {
                     context.fillStyle = '#ffffff'; 
                     context.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
