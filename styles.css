@@ -37,10 +37,8 @@ body {
     
 }
 .ex{
-    top:0;
-    left: 0;
-    margin: 5px;
-    text-align: right;
+    margin:5px;
+    width: 20px;
     cursor: pointer;
 }
 .info{
