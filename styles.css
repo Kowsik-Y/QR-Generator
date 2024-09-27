@@ -167,7 +167,6 @@ button:hover {
     cursor: pointer;
    
 }
-
 :root {
 	--hue: 223;
 	--bg: hsl(var(--hue),90%,90%);
@@ -176,9 +175,10 @@ button:hover {
 	--trans-dur: 0.3s;
 	font-size: calc(16px + (32 - 16) * (100vw - 320px) / (2560 - 320));
 }
-.loader {
+#loader {
 	display: flex;
-	position: absolute;
+	position: fixed;
+	z-index: 3;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
@@ -270,8 +270,4 @@ button:hover {
 		stroke-dashoffset: -56.549;
 		transform: rotate(1turn);
 	}
-}
-.loader-hid{
-	opacity: 0;
-	visibility: hidden;
 }
