@@ -13,6 +13,28 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="loader">
+	<svg class="circle" viewBox="0 0 48 30" width="48px" height="30px">
+	<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" class="loadcenter">
+		<g transform="translate(9.5,19)">
+			<circle class="circle__tire" r="9" stroke-dasharray="56.550 56.550" />
+			<g class="circle__spokes-spin" stroke-dasharray="31.416 31.416" stroke-dashoffset="-23.562">
+				<circle class="circle__spokes" r="5" />
+				<circle class="circle__spokes" r="5" transform="rotate(180,0,0)" />
+			</g>
+		</g>
+	</g>
+</svg>
+</div>
+  <script >
+	window.addEventListener("load", () =>{
+		const loader=document.querySelector(".loader");
+		loader.classList.add("loader-hid");
+		loader.addEventListener("transitionend", () =>{
+			document.body.removeChild("loader");
+		})
+	})
+  </script>
     <div id="ale">
     <div id="aletext" ><div class="ex">&#10060;</div>
         <p class="info"></p>
