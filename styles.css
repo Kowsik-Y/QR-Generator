@@ -167,3 +167,111 @@ button:hover {
     cursor: pointer;
    
 }
+
+:root {
+	--hue: 223;
+	--bg: hsl(var(--hue),90%,90%);
+	--fg: hsl(var(--hue),90%,10%);
+	--primary: hsl(var(--hue),90%,50%);
+	--trans-dur: 0.3s;
+	font-size: calc(16px + (32 - 16) * (100vw - 320px) / (2560 - 320));
+}
+.loader {
+	display: flex;
+	position: absolute;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+	background-color: aqua;
+	transition:
+		background-color var(--trans-dur),
+		color var(--trans-dur);
+}
+.circle {
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	display: inline-block;
+	width: fit-content;
+	height: 100px;
+
+	padding-left:60px;
+	padding-right:10px;
+}
+.loadcenter{
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	
+}
+.circle__spokes,
+.circle__spokes-spin,
+.circle__tire {
+	animation: circleBody 3s ease-in-out infinite;
+	stroke: var(--primary);
+	transition: stroke var(--trans-dur);
+}
+
+.circle__spokes,
+.circle__tire {
+	stroke: currentColor;
+}
+.circle__spokes {
+	animation-name: circleSpokes;
+}
+.circle__spokes-spin {
+	animation-name: circleSpokesSpin;
+}
+.circle__tire {
+	animation-name: circleTire;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: hsl(var(--hue),90%,10%);
+		--fg: hsl(var(--hue),90%,90%);
+	}
+}
+@keyframes circleSpokes {
+	from {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: -31.416;
+	}
+	33%,
+	67% {
+		animation-timing-function: ease-out;
+		stroke-dashoffset: -23.562;
+	}
+	to {
+		stroke-dashoffset: -31.416;
+	}
+}
+@keyframes circleSpokesSpin {
+	from { transform: rotate(0); }
+	to { transform: rotate(3turn); }
+}
+@keyframes circleTire {
+	from {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: 56.549;
+		transform: rotate(0);
+	}
+	33% {
+		stroke-dashoffset: 0;
+		transform: rotate(0.33turn);
+	}
+	67% {
+		animation-timing-function: ease-out;
+		stroke-dashoffset: 0;
+		transform: rotate(0.67turn);
+	}
+	to {
+		stroke-dashoffset: -56.549;
+		transform: rotate(1turn);
+	}
+}
+.loader-hid{
+	opacity: 0;
+	visibility: hidden;
+}
