@@ -13,9 +13,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="loader">
+    	<div><p>he loo</p></div>
+	<div id="loader" style="visibility: visible;opacity: 1;">
 	<svg class="circle" viewBox="0 0 48 30" width="48px" height="30px">
-	<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" class="loadcenter">
+	<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" id="loadcenter">
 		<g transform="translate(9.5,19)">
 			<circle class="circle__tire" r="9" stroke-dasharray="56.550 56.550" />
 			<g class="circle__spokes-spin" stroke-dasharray="31.416 31.416" stroke-dashoffset="-23.562">
@@ -27,13 +28,22 @@
 </svg>
 </div>
   <script >
-	window.addEventListener("load", () =>{
-		const loader=document.querySelector(".loader");
+
+	function showdiv(){
+			document.getElementById("loader").style.visibility="hidden";
+			document.getElementById("loader").style.opacity="0";
+		}
+		window.addEventListener("load", () =>{
+		const loader=document.querySelector("#loader");
+		setTimeout("showdiv()",3000);
 		loader.classList.add("loader-hid");
 		loader.addEventListener("transitionend", () =>{
 			document.body.removeChild("loader");
 		})
 	})
+		
+		
+	
   </script>
     <div id="ale">
     <div id="aletext" ><div class="ex">&#10060;</div>
