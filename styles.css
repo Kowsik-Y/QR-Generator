@@ -151,7 +151,7 @@ button:hover {
   --fg: hsl(var(--hue), 90%, 10%);
   --primary: hsl(var(--hue), 90%, 50%);
   --trans-dur: 0.3s;
-  font-size: calc(10px + (26 - 16) * (100vw - 320px) / (2560 - 320));
+  font-size: 16px; 
 }
 #loader {
   margin: auto;
