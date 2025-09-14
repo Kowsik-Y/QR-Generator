@@ -1,15 +1,29 @@
-document.getElementById("generate-btn").addEventListener("click", function () {
-  var qrTextin = document.getElementById("text-input").value;
-  var colorDark = document.getElementById("color-dark").value;
-  var colorLight = document.getElementById("color-light").value;
-  var transparentBg = document.getElementById("transparent-bg").checked;
-  var upi = document.getElementById("UPI").checked;
-  var qrText;
-  var aler = document.getElementById("ale");
-  let info = document.querySelector(".info");
+document
+  .getElementById("qr-generate-btn")
+  .addEventListener("click", function () {
+    var qrTextin = document.getElementById("qr-input-text").value.trim();
+    var colorDark = document.getElementById("qr-color-dark").value;
+    var colorLight = document.getElementById("qr-color-light").value;
+    var transparentBg = document.getElementById("qr-transparent-bg").checked;
+    var qrtype = document.getElementById("qr-type").value;
+    var qrText = "";
 
-  if (qrTextin) {
-    if (upi) {
+    var aler = document.getElementById("notification-bar");
+    let info = document.querySelector(".notification-message");
+
+    if (!qrTextin) {
+      aler.style.display = "flex";
+      info.innerHTML = "Enter something to generate QR...";
+      window.onclick = function (event) {
+        if (event.target == aler) {
+          aler.style.display = "none";
+        }
+      };
+      return;
+    }
+
+    // Handle QR content based on type
+    if (qrtype === "upi") {
       if (!qrTextin.includes("@")) {
         aler.style.display = "flex";
         info.innerHTML = "Invalid UPI ID";
@@ -19,15 +33,42 @@ document.getElementById("generate-btn").addEventListener("click", function () {
           }
         };
         return;
-      } else {
-        qrText = "upi://pay?pa=" + qrTextin;
       }
+      qrText = "upi://pay?pa=" + qrTextin;
+    } else if (qrtype === "email") {
+      if (!qrTextin.includes("@") || !qrTextin.includes(".")) {
+        aler.style.display = "flex";
+        info.innerHTML = "Invalid Email Address";
+        window.onclick = function (event) {
+          if (event.target == aler) {
+            aler.style.display = "none";
+          }
+        };
+        return;
+      }
+      qrText = "mailto:" + qrTextin;
+    } else if (qrtype === "phone") {
+      let phonePattern = /^[0-9+\-\s()]+$/;
+      if (!phonePattern.test(qrTextin)) {
+        aler.style.display = "flex";
+        info.innerHTML = "Invalid Phone Number";
+        window.onclick = function (event) {
+          if (event.target == aler) {
+            aler.style.display = "none";
+          }
+        };
+        return;
+      }
+      qrText = "tel:" + qrTextin;
     } else {
       qrText = qrTextin;
     }
-    var qrCodeElement = document.getElementById("qr-code");
+
+    // Generate QR Code
+    var qrCodeElement = document.getElementById("qr-output");
     qrCodeElement.innerHTML = "";
     var lightColor = transparentBg ? "rgba(0, 0, 0, 0)" : colorLight;
+
     var qr = new QRCode(qrCodeElement, {
       text: qrText,
       width: 256,
@@ -36,6 +77,7 @@ document.getElementById("generate-btn").addEventListener("click", function () {
       colorLight: lightColor,
       correctLevel: QRCode.CorrectLevel.H,
     });
+
     setTimeout(() => {
       var qrCanvas = qrCodeElement.querySelector("canvas");
       if (qrCanvas) {
@@ -44,6 +86,7 @@ document.getElementById("generate-btn").addEventListener("click", function () {
         var context = paddedCanvas.getContext("2d");
         paddedCanvas.width = qrCanvas.width + 2 * padding;
         paddedCanvas.height = qrCanvas.height + 2 * padding;
+
         if (!transparentBg) {
           context.fillStyle = "#ffffff";
           context.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
@@ -63,33 +106,11 @@ document.getElementById("generate-btn").addEventListener("click", function () {
 
         var timestamp = new Date().toISOString().replace(/[-:.]/g, "");
         var filename = "qrcode_" + timestamp + ".png";
-        var downloadLink = document.getElementById("download-link");
+        var downloadLink = document.getElementById("qr-download-link");
         downloadLink.href = qrImage;
         downloadLink.download = filename;
         downloadLink.style.display = "block";
         downloadLink.classList.add("show");
       }
     }, 100);
-  } else {
-    aler.style.display = "flex";
-    info.innerHTML = "Enter some Text or a Url!";
-    window.onclick = function (event) {
-      if (event.target == aler) {
-        aler.style.display = "none";
-      }
-    };
-  }
-});
-
-function hep() {
-  var aler = document.getElementById("ale");
-  let info = document.querySelector(".info");
-  aler.style.display = "flex";
-  info.innerHTML =
-    '<a href="https://github.com/Kowsik-Y"  style=" text-decoration: none;"><i class="fa fa-github"> Github</i> </a><hr><a href="https://github.com/Kowsik-Y/QR-Generator-/issues/new/choose"  style=" text-decoration: none;"><i class="fa fa-caret-square-o-right">  Issues&Request</i> </a>';
-  window.onclick = function (event) {
-    if (event.target == aler) {
-      aler.style.display = "none";
-    }
-  };
-}
+  });
